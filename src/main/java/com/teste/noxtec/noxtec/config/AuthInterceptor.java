@@ -4,25 +4,55 @@
  */
 package com.teste.noxtec.noxtec.config;
 
+import com.teste.noxtec.noxtec.util.JwtUtil;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 /**
  *
  * @author Usuario
  */
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
+    
+    @Autowired
+    private JwtUtil jwtUtil;
+    
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (request.getRequestURI().equals("/token")) {
+            return true;
+        }
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || authHeader.isEmpty()) {
-            System.out.println("Authorization: "+authHeader);
+            logger.warn("Tentativa de acesso sem Authorization header");
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authorization header is missing");
             return false;
         }
+        if(!this.validarToken(authHeader, response)){
+            return false;
+        }
+        logger.info("Requisição autorizada "+request.getRequestURI(), request.getRequestURI());
         return true;
+    }
+    
+    private boolean validarToken(String authHeader, HttpServletResponse response) throws IOException{
+        try { 
+            String sub = jwtUtil.decodeToken(authHeader);
+            return sub.equals("noxtec");
+        } catch (Exception e) {
+            logger.error("Erro ao decodificar JWT: {}", e.getMessage());
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido");
+            return false;
+        }
     }
 }
