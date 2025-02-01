@@ -28,15 +28,18 @@ public class Contato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "nome", nullable = false)
     private String nome;
+    @Column(name = "email", nullable = false)
     private String email;
+    @Column(name = "celular", nullable = false)
     private String celular;
     private String telefone;
     private char snFavorito;
     private char snAtivo;
     @Column(name = "data_cadastro", nullable = false)
     private LocalDateTime dhCad;
-    @Column(name = "data_alteracao", nullable = false)
+    @Column(name = "data_alteracao")
     private LocalDateTime dhAlt;
     
     @PrePersist
