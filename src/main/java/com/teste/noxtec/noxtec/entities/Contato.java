@@ -27,19 +27,23 @@ import lombok.Data;
 public class Contato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contato_id")
     private Long id;
-    @Column(name = "nome", nullable = false)
+    @Column(name = "contato_nome", nullable = false)
     private String nome;
-    @Column(name = "email", nullable = false)
+    @Column(name = "contato_email", nullable = false)
     private String email;
-    @Column(name = "celular", nullable = false)
+    @Column(name = "contato_celular", nullable = false)
     private String celular;
+    @Column(name = "contato_telefone")
     private String telefone;
+    @Column(name = "contato_sn_favorito")
     private char snFavorito;
+    @Column(name = "contato_sn_ativo")
     private char snAtivo;
-    @Column(name = "data_cadastro", nullable = false)
+    @Column(name = "contato_dh_cad", nullable = false)
     private LocalDateTime dhCad;
-    @Column(name = "data_alteracao")
+    @Column(name = "contato_dh_alt")
     private LocalDateTime dhAlt;
     
     @PrePersist
