@@ -5,6 +5,7 @@ import { Contato } from '../contato.model';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-contato-list',
   templateUrl: './contato-list.component.html',
@@ -16,7 +17,8 @@ export class ContatoListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'email', 'celular', 'snFavorito', 'snAtivo', 'dhCad', 'acoes'];
 
   constructor(
-    private contatoService: ContatoService
+    private contatoService: ContatoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -42,8 +44,9 @@ export class ContatoListComponent implements OnInit {
     return new Date(data).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
   }
 
-  editarContato(id: number) {
-    console.log(`Editar contato ID: ${id}`);
+  editarContato(contato: Contato) {
+    this.contatoService.contato = contato;
+    this.router.navigate([`contatos/editar/${contato.id}`]);
   }
 
   excluirContato(id: number) {

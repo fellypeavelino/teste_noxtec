@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Contato } from './contato.model';
-import { firstValueFrom  } from 'rxjs';
+import { firstValueFrom, Observable  } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root' // ✅ Isso garante que o serviço é registrado globalmente
+  providedIn: 'root' 
 })
 export class ContatoService {
-  private apiUrl = '/api/contatos'; // Ajuste conforme necessário
-  
+  private apiUrl = '/api/contatos'; 
+  public contato: Contato | null = null;
+
   constructor(private http: HttpClient) {}
 
   async getToken(): Promise<any> {
