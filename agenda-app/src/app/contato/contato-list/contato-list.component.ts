@@ -1,17 +1,16 @@
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ContatoService } from '../contato.service';
 import { Contato } from '../contato.model';
-import {MatTableModule} from '@angular/material/table';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 @Component({
   selector: 'app-contato-list',
   templateUrl: './contato-list.component.html',
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatPaginatorModule],
 })
-export class ContatoListComponent implements OnInit, AfterViewInit {
-  contatos: Contato[] = [];
+export class ContatoListComponent implements OnInit {
+  dataSource  = new MatTableDataSource<Contato>([]);
   displayedColumns: string[] = ['id', 'nome', 'email', 'celular', 'snFavorito', 'snAtivo', 'dhCad', 'acoes'];
 
   constructor(
@@ -22,13 +21,14 @@ export class ContatoListComponent implements OnInit, AfterViewInit {
     this.loadContatos();
   }
 
-  ngAfterViewInit(): void {}
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   loadContatos(): void {
-    this.contatoService.getAll().then(data => this.contatos = data);
+    this.contatoService.getAll().then(contatos => {
+      this.dataSource = new MatTableDataSource<Contato>(contatos);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   deleteContato(id: number): void {
