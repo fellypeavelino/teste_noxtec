@@ -49,7 +49,9 @@ export class ContatoListComponent implements OnInit {
     this.router.navigate([`contatos/editar/${contato.id}`]);
   }
 
-  excluirContato(id: number) {
+  async excluirContato(id: number) {
+    await this.contatoService.delete(id);
+    this.loadContatos();
     console.log(`Excluir contato ID: ${id}`);
   }
 }
