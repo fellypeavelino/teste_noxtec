@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-title>{{ contato.id ? 'Editar Contato' : 'Novo Contato' }}</mat-card-title>
+  <mat-card-title>{{ isEdit ? 'Editar Contato' : 'Novo Contato' }}</mat-card-title>
   <mat-card-content>
     <form [formGroup]="contatoForm" (ngSubmit)="salvar()" class="vertical-form">
       <mat-form-field class="full-width">
@@ -39,7 +39,9 @@
       </mat-form-field>
 
       <div class="actions">
-        <button mat-raised-button color="primary" type="submit" [disabled]="contatoForm.invalid">Salvar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="contatoForm.invalid">
+          {{isEdit ? 'Editar' : 'Salvar' }}
+        </button>
         <button mat-raised-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
       </div>
     </form>

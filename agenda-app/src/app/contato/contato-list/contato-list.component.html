@@ -1,5 +1,8 @@
 <div class="container mt-4">
   <h2>Lista de Contatos</h2>
+  <button mat-icon-button color="primary" (click)="criarContato()">
+    <mat-icon>save</mat-icon>
+  </button>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="id">

@@ -54,4 +54,9 @@ export class ContatoListComponent implements OnInit {
     this.loadContatos();
     console.log(`Excluir contato ID: ${id}`);
   }
+
+  criarContato(){
+    this.contatoService.contato = null;
+    this.router.navigate([`contatos/novo`]);
+  }
 }

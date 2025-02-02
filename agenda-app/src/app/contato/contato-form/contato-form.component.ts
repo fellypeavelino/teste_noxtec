@@ -6,7 +6,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
-import {FormBuilder,FormGroup,FormArray,Validators,ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder,FormGroup,Validators,ReactiveFormsModule} from "@angular/forms";
 @Component({
   selector: 'app-contato-form',
   templateUrl: './contato-form.component.html',
@@ -14,7 +14,7 @@ import {FormBuilder,FormGroup,FormArray,Validators,ReactiveFormsModule} from "@a
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContatoFormComponent implements OnInit {
-  contato: Contato = { nome: '', email: '', celular: '', snFavorito: 'N', snAtivo: 'S' };
+  contato!: Contato;
   isEdit = false;
   contatoForm!: FormGroup;
 
@@ -34,18 +34,27 @@ export class ContatoFormComponent implements OnInit {
       snFavorito: ['', Validators.required],
       snAtivo: ['', Validators.required]
     });
+    this.carregarDados();
+  }
+
+  async carregarDados(){
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEdit = true;
-      this.contatoService.getById(+id).then(data => this.contato = data);
+      await this.contatoService.getById(+id).then(data => this.contato = data);
+      this.contatoForm.patchValue(this.contato);
     }
   }
 
   salvar(): void {
+    const formValues = this.contatoForm.value;
+    this.contato = formValues;
     if (this.isEdit) {
-      this.contatoService.update(this.contato.id!, this.contato)//.then(() => this.router.navigate(['/contatos']));
+      this.contato.id = this.contatoService.contato?.id;
+      this.contato.dhCad = this.contatoService.contato?.dhCad;
+      this.contatoService.update(this.contato.id!, this.contato).then(() => this.router.navigate(['/contatos']));
     } else {
-      this.contatoService.create(this.contato)//.then(() => this.router.navigate(['/contatos']));
+      this.contatoService.create(this.contato).then(() => this.router.navigate(['/contatos']));
     }
   }
 
