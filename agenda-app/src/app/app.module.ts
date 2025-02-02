@@ -14,6 +14,12 @@ import { MatIconModule } from '@angular/material/icon'; // Ícones Material
 import { MatButtonModule } from '@angular/material/button'; // Botões
 import { MatPaginatorModule } from '@angular/material/paginator'; // Paginação
 import { MatSortModule } from '@angular/material/sort'; // Ordenação
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +33,13 @@ import { MatSortModule } from '@angular/material/sort'; // Ordenação
     MatIconModule,
     MatButtonModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCardModule
   ],
   bootstrap: [AppComponent],
   providers: [provideHttpClient()] 

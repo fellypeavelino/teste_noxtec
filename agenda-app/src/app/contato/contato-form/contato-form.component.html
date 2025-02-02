@@ -1,1 +1,47 @@
-<p>contato-form works!</p>
+<mat-card>
+  <mat-card-title>{{ contato.id ? 'Editar Contato' : 'Novo Contato' }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="contatoForm" (ngSubmit)="salvar()" class="vertical-form">
+      <mat-form-field class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" required />
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" required />
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Celular</mat-label>
+        <input matInput formControlName="celular" required />
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Telefone</mat-label>
+        <input matInput formControlName="telefone" />
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Favorito</mat-label>
+        <mat-select formControlName="snFavorito" required>
+          <mat-option value="S">Sim</mat-option>
+          <mat-option value="N">Não</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Ativo</mat-label>
+        <mat-select formControlName="snAtivo" required>
+          <mat-option value="S">Sim</mat-option>
+          <mat-option value="N">Não</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="contatoForm.invalid">Salvar</button>
+        <button mat-raised-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
