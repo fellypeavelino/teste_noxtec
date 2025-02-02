@@ -1,13 +1,15 @@
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { ContatoService } from '../contato.service';
 import { Contato } from '../contato.model';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-contato-list',
   templateUrl: './contato-list.component.html',
-  imports: [MatTableModule, MatPaginatorModule],
+  imports: [MatTableModule, MatPaginatorModule, MatIconModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContatoListComponent implements OnInit {
   dataSource  = new MatTableDataSource<Contato>([]);
