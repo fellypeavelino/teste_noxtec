@@ -4,6 +4,7 @@
  */
 package com.teste.noxtec.noxtec.controllers;
 
+import com.teste.noxtec.noxtec.dtos.TokenDTO;
 import com.teste.noxtec.noxtec.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,9 @@ public class TokenController {
     private JwtUtil jwtUtil;
     
     @GetMapping
-    public ResponseEntity<String> gerarToken() {
-        return ResponseEntity.ok(jwtUtil.generateToken("noxtec"));
+    public ResponseEntity<TokenDTO> gerarToken() {
+        TokenDTO t = new TokenDTO();
+        t.setSub(jwtUtil.generateToken("noxtec"));
+        return ResponseEntity.ok(t);
     }
 }
