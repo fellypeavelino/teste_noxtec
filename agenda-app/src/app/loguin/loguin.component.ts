@@ -3,9 +3,12 @@ import { ContatoService } from '../contato/contato.service';
 import { Router } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import { GuardService } from '../guard.service';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
+
 @Component({
   selector: 'app-loguin',
-  imports: [MatIconModule],
+  imports: [MatIconModule, MatDividerModule, MatButtonModule],
   templateUrl: './loguin.component.html',
   styleUrl: './loguin.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
