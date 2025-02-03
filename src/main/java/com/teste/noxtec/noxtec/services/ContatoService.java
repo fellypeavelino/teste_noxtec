@@ -9,13 +9,14 @@ import com.teste.noxtec.noxtec.entities.Contato;
 import com.teste.noxtec.noxtec.entities.Usuario;
 import com.teste.noxtec.noxtec.repositories.ContatoRepository;
 import com.teste.noxtec.noxtec.repositories.UsuarioRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 
 @Service
 public class ContatoService {
@@ -34,6 +35,11 @@ public class ContatoService {
         return contatos.stream()
                        .map(this::convertToDto)
                        .collect(Collectors.toList());
+    }
+    
+    public Page<ContatoDTO> getContatosPaginados(int page, int size) {
+        Page<Contato> contatosPage = repository.findAll(PageRequest.of(page, size));
+        return contatosPage.map(contato -> this.convertToDto(contato));
     }
     
     public Optional<Contato> buscarPorCelular(String celular) {

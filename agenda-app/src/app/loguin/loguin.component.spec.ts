@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
 import { LoguinComponent } from './loguin.component';
 
 describe('LoguinComponent', () => {
@@ -8,7 +9,10 @@ describe('LoguinComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoguinComponent]
+      imports: [LoguinComponent],
+      providers: [
+        provideHttpClient(), provideAnimations()
+      ]
     })
     .compileComponents();
 

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
 import { ContatoListComponent } from './contato-list.component';
 
 describe('ContatoListComponent', () => {
@@ -8,7 +9,10 @@ describe('ContatoListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContatoListComponent]
+      imports: [ContatoListComponent],
+      providers: [
+        provideHttpClient(), provideAnimations()
+      ]
     })
     .compileComponents();
 
