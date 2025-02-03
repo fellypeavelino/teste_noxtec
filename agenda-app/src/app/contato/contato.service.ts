@@ -10,6 +10,7 @@ export class ContatoService {
   private apiUrl = '/api/contatos'; 
   public contato: Contato | null = null;
   public token!: string;
+  public usuarioLoguin: any;
 
   constructor(private http: HttpClient) {}
 

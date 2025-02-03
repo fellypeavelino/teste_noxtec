@@ -1,10 +1,27 @@
-<section>
+<!-- <section>
     <div class="example-label">Click no botão para logar</div>
     <div class="example-button-row">
         <button mat-icon-button color="primary" (click)="logar()">
             <button mat-stroked-button>loguin</button>
         </button>
     </div>
-</section>
+</section> -->
+
+<mat-card>
+    <form [formGroup]="loginForm" (ngSubmit)="logar()">
+      <mat-form-field>
+        <mat-label>Login</mat-label>
+        <input matInput formControlName="loguin" required>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" formControlName="senha" required>
+      </mat-form-field>
+      
+      <button mat-raised-button color="primary" type="submit">Login</button>
+    </form>
+</mat-card>
+  
 
 

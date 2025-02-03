@@ -8,4 +8,5 @@ export interface Contato {
     snAtivo: string;
     dhCad?: string;
     dhAlt?: string;
+    usuario_id:number;
 }
