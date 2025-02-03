@@ -102,6 +102,9 @@ A documentação da API pode ser acessada via Swagger na seguinte URL:
    ng serve
    ```
 5. Acesse o frontend pelo navegador em `http://localhost:4200`.
+6. Na tela de login, utilize as credenciais padrão:
+   - **Login:** `admin`
+   - **Senha:** `admin123`
 
 ### Banco de Dados esta no Docker Compose
 
@@ -111,4 +114,3 @@ A documentação da API pode ser acessada via Swagger na seguinte URL:
    docker-compose up -d
    ```
 3. O banco de dados estará disponível para conexão.
-
