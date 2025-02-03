@@ -16,6 +16,21 @@ A API expõe os seguintes endpoints:
 
 ### Autenticação
 
+### Usuário (Login)
+
+- **POST `/usuario`** - Realiza a autenticação do usuário.
+  - **Credenciais Padrão:**
+    - **Login:** `admin`
+    - **Senha:** `admin123`
+  - **Resposta:**
+    ```json
+      {
+        "id": 9007199254740991,
+        "loguin": "admin",
+        "senha": "admin123"
+      }
+    ```
+
 - **POST `/token`** - Gera um token JWT para autenticação.
   - **Resposta:**
     ```json
