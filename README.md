@@ -77,7 +77,7 @@ A documentação da API pode ser acessada via Swagger na seguinte URL:
 ### Frontend
 
 1. Certifique-se de ter o Node.js instalado.
-2. Navegue até a pasta do frontend.
+2. Navegue até a pasta do frontend (agenda-app).
 3. Instale as dependências:
    ```sh
    npm install
