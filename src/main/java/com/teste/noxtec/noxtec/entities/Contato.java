@@ -44,7 +44,7 @@ public class Contato {
     private String email;
     @Column(name = "contato_celular", nullable = false)
     @NotNull
-    @Size(min = 10, max = 15)
+    @Size(min = 8, max = 15)
     private String celular;
     @Column(name = "contato_telefone")
     @Size(max = 15)
