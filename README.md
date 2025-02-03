@@ -1,4 +1,4 @@
-# Teste de Projeto com Spring Boot e Angular
+# Projeto com Spring Boot e Angular
 
 Este projeto é um teste utilizando **Spring Boot (Java 21)** no backend e **Angular 19** no frontend.
 
