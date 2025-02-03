@@ -11,6 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 @Component({
   selector: 'app-contato-form',
   templateUrl: './contato-form.component.html',
+  styleUrl: './contato-form.component.css',
   imports: [
     MatFormFieldModule, MatInputModule, MatButtonModule,
     MatSelectModule, MatCardModule, ReactiveFormsModule

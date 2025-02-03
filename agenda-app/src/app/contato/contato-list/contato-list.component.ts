@@ -13,6 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
 @Component({
   selector: 'app-contato-list',
   templateUrl: './contato-list.component.html',
+  styleUrl: './contato-list.component.css',
   imports: [
     MatTableModule, MatPaginatorModule, MatIconModule, 
     MatFormFieldModule, MatInputModule, ReactiveFormsModule,
