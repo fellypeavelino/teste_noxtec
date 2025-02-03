@@ -16,7 +16,6 @@ export class GuardService {
   }
 
   isLoggedIn(): boolean {
-    return true;
-    //return this.loggedIn;
+    return this.loggedIn;
   }
 }

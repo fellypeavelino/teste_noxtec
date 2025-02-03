@@ -9,6 +9,7 @@ import { firstValueFrom, Observable  } from 'rxjs';
 export class ContatoService {
   private apiUrl = '/api/contatos'; 
   public contato: Contato | null = null;
+  public token!: string;
 
   constructor(private http: HttpClient) {}
 
@@ -17,7 +18,8 @@ export class ContatoService {
   }
 
   private async getHeaders(): Promise<any> {
-    const token = await this.getToken();
+    //const token = await this.getToken();
+    const token = this.token;
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
