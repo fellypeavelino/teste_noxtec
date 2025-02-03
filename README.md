@@ -60,7 +60,7 @@ A API expõe os seguintes endpoints:
 
 A documentação da API pode ser acessada via Swagger na seguinte URL:
 
-[Swagger UI](http://localhost:8080/swagger-ui.html)
+[Swagger UI] `http://localhost:8080/swagger-ui.html`
 
 ## Como Executar o Projeto
 
