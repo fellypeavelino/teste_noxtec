@@ -1,8 +1,15 @@
 <div class="container mt-4">
   <h2>Lista de Contatos</h2>
-  <button mat-icon-button color="primary" (click)="criarContato()">
-    <mat-icon>save</mat-icon>
-  </button>
+  <div class="actions-header">
+    <button mat-raised-button color="primary" (click)="criarContato()">
+      <mat-icon>add</mat-icon> Novo Contato
+    </button>
+    &nbsp;
+    <mat-form-field class="example-form-field">
+      <mat-label>Filtrar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Digite para filtrar" />
+    </mat-form-field>
+  </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="id">
@@ -69,4 +76,3 @@
     aria-label="Select page of periodic elements">
   </mat-paginator>
 </div>
-

@@ -6,10 +6,16 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {ReactiveFormsModule} from "@angular/forms";
 @Component({
   selector: 'app-contato-list',
   templateUrl: './contato-list.component.html',
-  imports: [MatTableModule, MatPaginatorModule, MatIconModule],
+  imports: [
+    MatTableModule, MatPaginatorModule, MatIconModule, 
+    MatFormFieldModule, MatInputModule, ReactiveFormsModule
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContatoListComponent implements OnInit {
@@ -58,5 +64,10 @@ export class ContatoListComponent implements OnInit {
   criarContato(){
     this.contatoService.contato = null;
     this.router.navigate([`contatos/novo`]);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
