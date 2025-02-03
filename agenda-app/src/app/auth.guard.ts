@@ -8,8 +8,8 @@ import { GuardService } from './guard.service';
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(GuardService);
   const router = inject(Router);
-
-  if (authService.isLoggedIn()) {
+  const logado = localStorage.getItem("logado");
+  if (authService.isLoggedIn() || logado == "true") {
     return true;
   } else {
     //router.navigate(['error']);

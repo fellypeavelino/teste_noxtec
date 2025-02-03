@@ -19,8 +19,7 @@ export class ContatoService {
   }
 
   private async getHeaders(): Promise<any> {
-    //const token = await this.getToken();
-    const token = this.token;
+    let token = (this.token) ? this.token : localStorage.getItem("token");
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -60,5 +59,13 @@ export class ContatoService {
     return await firstValueFrom (this.http.delete<void>(`${this.apiUrl}/${id}`,{
       headers
     }));
+  }
+
+  getUsuarioLoguin(): any | null {
+    if (this.usuarioLoguin) {
+      return this.usuarioLoguin;
+    }
+    const usuarioLoguin = localStorage.getItem("usuarioLoguin");
+    return usuarioLoguin ? JSON.parse(usuarioLoguin) as any : null;
   }
 }

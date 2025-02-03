@@ -54,7 +54,7 @@ export class ContatoFormComponent implements OnInit {
   salvar(): void {
     const formValues = this.contatoForm.value;
     this.contato = formValues;
-    this.contato.usuario_id = this.contatoService.usuarioLoguin.id;
+    this.contato.usuario_id = (this.contatoService.getUsuarioLoguin()).id;
     if (this.isEdit) {
       this.contato.id = this.contatoService.contato?.id;
       this.contato.dhCad = this.contatoService.contato?.dhCad;

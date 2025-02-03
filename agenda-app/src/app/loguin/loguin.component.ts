@@ -50,12 +50,17 @@ export class LoguinComponent implements OnInit {
       if (!data.id) {
         alert("usuario ou senha não existem");
         vm.guardService.logout();
+        localStorage.removeItem("logado");
+        localStorage.removeItem("usuarioLoguin");
         return;
       }
+      localStorage.setItem("logado", "true");
       this.loguinService.usuarioLoguin = data;
       const token = await vm.contatoService.getToken();
       vm.contatoService.usuarioLoguin = data;
+      localStorage.setItem("usuarioLoguin", JSON.stringify(data));
       vm.contatoService.token = token;
+      localStorage.setItem("token", token);
       vm.guardService.login();
       vm.router.navigate([`contatos`]);
     });
