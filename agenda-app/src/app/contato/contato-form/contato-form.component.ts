@@ -10,7 +10,10 @@ import {FormBuilder,FormGroup,Validators,ReactiveFormsModule} from "@angular/for
 @Component({
   selector: 'app-contato-form',
   templateUrl: './contato-form.component.html',
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatCardModule, ReactiveFormsModule],
+  imports: [
+    MatFormFieldModule, MatInputModule, 
+    MatSelectModule, MatCardModule, ReactiveFormsModule
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContatoFormComponent implements OnInit {
