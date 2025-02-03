@@ -7,11 +7,12 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {FormBuilder,FormGroup,Validators,ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from '@angular/material/button';
 @Component({
   selector: 'app-contato-form',
   templateUrl: './contato-form.component.html',
   imports: [
-    MatFormFieldModule, MatInputModule, 
+    MatFormFieldModule, MatInputModule, MatButtonModule,
     MatSelectModule, MatCardModule, ReactiveFormsModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -9,12 +9,14 @@ import { Router } from '@angular/router';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from '@angular/material/button';
 @Component({
   selector: 'app-contato-list',
   templateUrl: './contato-list.component.html',
   imports: [
     MatTableModule, MatPaginatorModule, MatIconModule, 
-    MatFormFieldModule, MatInputModule, ReactiveFormsModule
+    MatFormFieldModule, MatInputModule, ReactiveFormsModule,
+    MatButtonModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
