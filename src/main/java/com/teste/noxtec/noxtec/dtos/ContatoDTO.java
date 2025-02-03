@@ -24,6 +24,7 @@ public class ContatoDTO {
     private String telefone;
     private char snFavorito;
     private char snAtivo;
+    private Long usuario_id;
     private LocalDateTime dhCad;
     private LocalDateTime dhAlt;
 }

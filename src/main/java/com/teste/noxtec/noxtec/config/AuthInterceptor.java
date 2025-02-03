@@ -10,7 +10,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.slf4j.Logger;
@@ -29,11 +31,9 @@ public class AuthInterceptor implements HandlerInterceptor {
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (
-                request.getRequestURI().equals("/token") ||
-                request.getRequestURI().equals("/v3/api-docs") ||
-                request.getRequestURI().indexOf("swagger") != -1
-        ) {
+        List<String> allowedURIs = Arrays.asList("/token", "/v3/api-docs");
+        String requestURI = request.getRequestURI();
+        if (allowedURIs.contains(requestURI) || requestURI.contains("swagger") || requestURI.contains("usuario")) {
             return true;
         }
         String authHeader = request.getHeader("Authorization");

@@ -6,35 +6,34 @@ package com.teste.noxtec.noxtec.services;
 
 import com.teste.noxtec.noxtec.dtos.ContatoDTO;
 import com.teste.noxtec.noxtec.entities.Contato;
+import com.teste.noxtec.noxtec.entities.Usuario;
 import com.teste.noxtec.noxtec.repositories.ContatoRepository;
+import com.teste.noxtec.noxtec.repositories.UsuarioRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Usuario
- */
 @Service
 public class ContatoService {
+    
     @Autowired
     private ContatoRepository repository;
-
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    
     public List<Contato> listarContatos() {
         return repository.findAll();
     }
 
     public List<ContatoDTO> listarContatosDto() {
         List<Contato> contatos = repository.findAll();
-        List<ContatoDTO> contatosDto = new ArrayList<>();
-        contatos.forEach(contato -> {
-            ContatoDTO contatoDto = new ModelMapper().map(contato, ContatoDTO.class);
-            contatosDto.add(contatoDto);
-        });
-        return contatosDto;
+        return contatos.stream()
+                       .map(this::convertToDto)
+                       .collect(Collectors.toList());
     }
     
     public Optional<Contato> buscarPorCelular(String celular) {
@@ -42,29 +41,28 @@ public class ContatoService {
     }
 
     public ContatoDTO buscarPorCelularDTO(String celular) {
-        Optional<Contato> optional = this.buscarPorCelular(celular);
-        Contato contato = new Contato();
-        if(optional.isPresent()){
-            contato = optional.get();
-        }
-        return new ModelMapper().map(contato, ContatoDTO.class);
+        return buscarPorCelular(celular)
+                .map(this::convertToDto)
+                .orElseThrow(() -> new RuntimeException("Contato não encontrado"));
     }
-    
-    public Contato salvarContato(Contato contato) {
+
+    public Contato salvarContato(Contato contato, Long usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        contato.setUsuario(usuario);
         return repository.save(contato);
     }
-    
+
     public ContatoDTO salvarContatoDto(ContatoDTO contatoDto) {
-        Contato contato = new ModelMapper().map(contatoDto, Contato.class);
-        contato = this.salvarContato(contato);
-        contatoDto = new ModelMapper().map(contato, ContatoDTO.class);
-        return contatoDto;
+        Contato contato = convertToEntity(contatoDto);
+        contato = salvarContato(contato, contatoDto.getUsuario_id());
+        return convertToDto(contato);
     }
-    
+
     public ContatoDTO alterarDto(Long id, ContatoDTO contatoDto) {
         repository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Contato não encontrado"));
-        return this.salvarContatoDto(contatoDto);
+                .orElseThrow(() -> new RuntimeException("Contato não encontrado"));
+        return salvarContatoDto(contatoDto);
     }
 
     public void excluir(Long id) {
@@ -73,7 +71,17 @@ public class ContatoService {
 
     public ContatoDTO pesquisar(Long id) {
         Contato contato = repository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Contato não encontrado"));
-        return new ModelMapper().map(contato, ContatoDTO.class);
+                .orElseThrow(() -> new RuntimeException("Contato não encontrado"));
+        return convertToDto(contato);
+    }
+
+    private ContatoDTO convertToDto(Contato contato) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(contato, ContatoDTO.class);
+    }
+
+    private Contato convertToEntity(ContatoDTO contatoDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(contatoDto, Contato.class);
     }
 }
