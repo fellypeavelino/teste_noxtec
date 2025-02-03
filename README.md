@@ -7,7 +7,7 @@ Este projeto é um teste utilizando **Spring Boot (Java 21)** no backend e **Ang
 - **Backend:** Java 21 com Spring Boot
 - **Frontend:** Angular 19
 - **Banco de Dados:** PostgreSQL
-- **Ferramentas de Build:** Maven/Gradle (Especificar qual está sendo utilizado)
+- **Ferramentas de Build:** Maven
 - **Containerização:** Docker Compose
 
 ## Endpoints da API
@@ -56,6 +56,12 @@ A API expõe os seguintes endpoints:
 - **DELETE `/contatos/{id}`** - Exclui um contato pelo ID.
 - **GET `/contatos/{id}`** - Retorna um contato específico pelo ID.
 
+## Documentação da API
+
+A documentação da API pode ser acessada via Swagger na seguinte URL:
+
+[Swagger UI](http://localhost:8080/swagger-ui.html)
+
 ## Como Executar o Projeto
 
 ### Backend
@@ -90,5 +96,4 @@ A API expõe os seguintes endpoints:
    docker-compose up -d
    ```
 3. O banco de dados estará disponível para conexão.
-
 

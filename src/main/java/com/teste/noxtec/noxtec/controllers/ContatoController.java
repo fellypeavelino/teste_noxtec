@@ -7,6 +7,7 @@ package com.teste.noxtec.noxtec.controllers;
 import com.teste.noxtec.noxtec.dtos.ContatoDTO;
 import com.teste.noxtec.noxtec.entities.Contato;
 import com.teste.noxtec.noxtec.services.ContatoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
