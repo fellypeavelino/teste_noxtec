@@ -15,6 +15,15 @@ describe('LoguinService', () => {
     service = TestBed.inject(LoguinService);
   });
 
+  it('should login a user', async () => {
+    const mockResponse = { id:1, loguin: 'test', senha: 'password' };
+    const loguinData = { loguin: 'test', senha: 'password' };
+
+    service.loguin(loguinData).then(response => {
+      expect(response).toEqual(mockResponse);
+    });
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
