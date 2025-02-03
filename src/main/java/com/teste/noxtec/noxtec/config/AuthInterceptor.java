@@ -29,12 +29,16 @@ public class AuthInterceptor implements HandlerInterceptor {
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (request.getRequestURI().equals("/token")) {
+        if (
+                request.getRequestURI().equals("/token") ||
+                request.getRequestURI().equals("/v3/api-docs") ||
+                request.getRequestURI().indexOf("swagger") != -1
+        ) {
             return true;
         }
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || authHeader.isEmpty()) {
-            logger.warn("Tentativa de acesso sem Authorization header");
+            logger.warn("Tentativa de acesso sem Authorization header "+request.getRequestURI());
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authorization header is missing");
             return false;
         }
