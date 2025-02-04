@@ -1,0 +1,9 @@
+.align-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-logout {
+    text-align: right;
+}
+  

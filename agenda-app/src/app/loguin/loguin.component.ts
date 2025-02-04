@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 import { ContatoService } from '../contato/contato.service';
 import { LoguinService } from './loguin.service';
 import { Router } from '@angular/router';
@@ -27,6 +27,7 @@ import {FormBuilder,FormGroup,Validators,ReactiveFormsModule} from "@angular/for
 export class LoguinComponent implements OnInit {
 
   loginForm!: FormGroup;
+  @Input() usarLogout!: boolean;
 
   constructor(
     private loguinService: LoguinService,
@@ -64,5 +65,12 @@ export class LoguinComponent implements OnInit {
       vm.guardService.login();
       vm.router.navigate([`contatos`]);
     });
+  }
+
+  logout(){
+    this.guardService.logout();
+    localStorage.removeItem("logado");
+    localStorage.removeItem("usuarioLoguin");
+    this.router.navigate([`loguin`]);
   }
 }

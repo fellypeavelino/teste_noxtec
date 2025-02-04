@@ -1,12 +1,13 @@
-<!-- <section>
-    <div class="example-label">Click no botão para logar</div>
-    <div class="example-button-row">
-        <button mat-icon-button color="primary" (click)="logar()">
-            <button mat-stroked-button>loguin</button>
+@if(usarLogout){
+<section class="align-right">
+    <div class="button-logout">
+        <button mat-raised-button color="primary" (click)="logout()">
+          <mat-icon>logout</mat-icon> logout
         </button>
     </div>
-</section> -->
-
+</section> 
+}
+@if(!usarLogout){
 <mat-card>
     <form [formGroup]="loginForm" (ngSubmit)="logar()">
       <mat-form-field>
@@ -22,6 +23,7 @@
       <button mat-raised-button color="primary" type="submit">Login</button>
     </form>
 </mat-card>
+}
   
 
 
