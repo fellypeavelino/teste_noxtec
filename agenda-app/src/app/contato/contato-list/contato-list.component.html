@@ -10,7 +10,7 @@
       <input matInput (keyup)="applyFilter($event)" placeholder="Digite para filtrar" />
     </mat-form-field>
   </div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>

@@ -10,6 +10,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from '@angular/material/button';
+import {Sort, MatSortModule} from '@angular/material/sort';
 @Component({
   selector: 'app-contato-list',
   templateUrl: './contato-list.component.html',
@@ -17,14 +18,15 @@ import {MatButtonModule} from '@angular/material/button';
   imports: [
     MatTableModule, MatPaginatorModule, MatIconModule, 
     MatFormFieldModule, MatInputModule, ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule, MatSortModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContatoListComponent implements OnInit {
   dataSource  = new MatTableDataSource<Contato>([]);
   displayedColumns: string[] = ['id', 'nome', 'email', 'celular', 'telefone', 'snFavorito', 'snAtivo', 'dhCad', 'acoes'];
-
+  sortedData!: Contato[];
+  listaContato!: Contato[];
   constructor(
     private contatoService: ContatoService,
     private router: Router
@@ -39,9 +41,15 @@ export class ContatoListComponent implements OnInit {
 
   loadContatos(): void {
     this.contatoService.getAll().then(contatos => {
-      this.dataSource = new MatTableDataSource<Contato>(contatos);
-      this.dataSource.paginator = this.paginator;
+      this.listaContato = contatos;
+      this.sortedData = contatos;
+      this.carregarDataSource(contatos);
     });
+  }
+
+  carregarDataSource(contatos: Contato[]){
+    this.dataSource = new MatTableDataSource<Contato>(contatos);
+    this.dataSource.paginator = this.paginator;
   }
 
   deleteContato(id: number): void {
@@ -72,5 +80,40 @@ export class ContatoListComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  sortData(sort: Sort) {
+    const vm = this;
+    const data = vm.listaContato.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+    vm.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'id':
+          return vm.compare(a.id, b.id, isAsc);
+        case 'nome':
+          return vm.compare(a.nome, b.nome, isAsc);
+        case 'email':
+          return vm.compare(a.email, b.email, isAsc);
+        case 'celular':
+          return vm.compare(a.celular, b.celular, isAsc);
+        case 'snFavorito':
+          return vm.compare(a.snFavorito, b.snFavorito, isAsc);
+        case 'snAtivo':
+          return vm.compare(a.snAtivo, b.snAtivo, isAsc);
+        case 'dhCad':
+          return vm.compare(a.dhCad, b.dhCad, isAsc);
+        default:
+          return 0;
+      }
+    });   
+    this.carregarDataSource(vm.sortedData);
+  }
+
+  compare(a: any, b: any, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 }
