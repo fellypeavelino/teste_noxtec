@@ -13,6 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {Sort, MatSortModule} from '@angular/material/sort';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {FormsModule} from '@angular/forms';
+import { ObjRequest } from '../../../models/objRequest.model';
 
 @Component({
   selector: 'app-contato-list',
@@ -31,6 +32,8 @@ export class ContatoListComponent implements OnInit {
   sortedData!: Contato[];
   listaContato!: Contato[];
   listaPaginada: boolean = false;
+  paramPaginacao!:ObjRequest;
+  lengthPage: number = 3;
   constructor(
     private contatoService: ContatoService,
     private router: Router
@@ -38,6 +41,8 @@ export class ContatoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadContatos();
+    // this.carregarParamPaginacao();
+    // this.loadContatosPaginado();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -123,7 +128,62 @@ export class ContatoListComponent implements OnInit {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
+  carregarParamPaginacao(){
+    this.paramPaginacao = new ObjRequest();
+    this.paramPaginacao.page = 0;
+    this.paramPaginacao.size = 5;
+    this.paramPaginacao.sortBy = "id";
+    this.paramPaginacao.sortDir = "desc";
+    this.paramPaginacao.filtro = "";
+  }
+
+  carregarDataSourcePaginado(contatos: Contato[], total:number){
+    this.dataSource = new MatTableDataSource<Contato>(contatos);
+    this.lengthPage = total;
+  }
+
+  loadContatosPaginado(): void {
+    const vm = this;
+    vm.contatoService.getPagination(vm.paramPaginacao).then(contatos => {
+      vm.carregarDataSourcePaginado(contatos.contatosDto, contatos.total);
+    });
+  }
+
   ativarDestaivarListaPaginada(){
-    console.log(this.listaPaginada);
+    if(this.listaPaginada){
+      this.loadContatosPaginado();
+      return;
+    }
+    this.loadContatos();
+  }
+
+  sortDataPaginado(sort: Sort){
+    if (!this.paramPaginacao) {
+      this.sortData(sort);
+      return;
+    }
+    const {active, direction} = sort;
+    this.paramPaginacao.sortBy = active;
+    this.paramPaginacao.sortDir = direction;
+    this.loadContatosPaginado();
+  }
+
+  eventoPaginacao($event:any){
+    if (!this.paramPaginacao) {
+      return;
+    }
+    this.paramPaginacao.page = $event.pageIndex;
+    this.paramPaginacao.size = $event.pageSize;
+    this.loadContatosPaginado();
+  }
+
+  applyFilterPaginado(event: Event) {
+    if (!this.paramPaginacao) {
+      this.applyFilter(event);
+      return;
+    }
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.paramPaginacao.filtro = filterValue.trim().toLowerCase();
+    this.loadContatosPaginado();
   }
 }

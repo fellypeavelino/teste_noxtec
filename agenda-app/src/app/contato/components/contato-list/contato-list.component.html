@@ -4,14 +4,14 @@
     <button mat-raised-button color="primary" (click)="criarContato()">
       <mat-icon>add</mat-icon> Novo Contato
     </button>
-    <mat-slide-toggle [(ngModel)]="listaPaginada" (change)="ativarDestaivarListaPaginada()">lista Paginada</mat-slide-toggle>
+    <!-- <mat-slide-toggle [(ngModel)]="listaPaginada" (change)="ativarDestaivarListaPaginada()">lista Paginada</mat-slide-toggle> -->
     &nbsp;
     <mat-form-field class="example-form-field">
       <mat-label>Filtrar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Digite para filtrar" />
+      <input matInput (keyup)="applyFilterPaginado($event)" placeholder="Digite para filtrar" />
     </mat-form-field>
   </div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="sortDataPaginado($event)">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
@@ -78,8 +78,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table> 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="eventoPaginacao($event)"
+    showFirstLastButtons [length]="lengthPage"
     aria-label="Select page of periodic elements">
   </mat-paginator>
 </div>

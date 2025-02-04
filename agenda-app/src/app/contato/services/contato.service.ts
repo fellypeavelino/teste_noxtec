@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Contato } from '../models/contato.model';
 import { firstValueFrom, Observable  } from 'rxjs';
+import { ObjRequest } from '../../models/objRequest.model';
 
 @Injectable({
   providedIn: 'root' 
@@ -33,9 +34,9 @@ export class ContatoService {
     }));
   }
 
-  async getPagination(): Promise<any> {
+  async getPagination(param:ObjRequest): Promise<any> {
     const headers = await this.getHeaders();
-    return await firstValueFrom (this.http.get<Contato[]>(this.apiUrl,{
+    return await firstValueFrom (this.http.post<any>(this.apiUrl+"/paginacao", param,{
       headers
     }));
   }
