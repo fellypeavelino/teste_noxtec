@@ -23,7 +23,7 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class ContatoListComponent implements OnInit {
   dataSource  = new MatTableDataSource<Contato>([]);
-  displayedColumns: string[] = ['id', 'nome', 'email', 'celular', 'snFavorito', 'snAtivo', 'dhCad', 'acoes'];
+  displayedColumns: string[] = ['id', 'nome', 'email', 'celular', 'telefone', 'snFavorito', 'snAtivo', 'dhCad', 'acoes'];
 
   constructor(
     private contatoService: ContatoService,

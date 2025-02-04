@@ -9,6 +9,7 @@ import com.teste.noxtec.noxtec.entities.Contato;
 import com.teste.noxtec.noxtec.entities.Usuario;
 import com.teste.noxtec.noxtec.repositories.ContatoRepository;
 import com.teste.noxtec.noxtec.repositories.UsuarioRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,10 +32,12 @@ public class ContatoService {
     }
 
     public List<ContatoDTO> listarContatosDto() {
-        List<Contato> contatos = repository.findAll();
-        return contatos.stream()
-                       .map(this::convertToDto)
-                       .collect(Collectors.toList());
+        List<Contato> contatos = repository.findAllByOrderByDhCadDesc();
+        List<ContatoDTO> listResult = new ArrayList<>();
+        contatos.forEach(c -> {
+            listResult.add(new ContatoDTO(c));
+        });
+        return listResult;
     }
     
     public Page<ContatoDTO> getContatosPaginados(int page, int size) {

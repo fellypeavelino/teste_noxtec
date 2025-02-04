@@ -4,6 +4,7 @@
  */
 package com.teste.noxtec.noxtec.dtos;
 
+import com.teste.noxtec.noxtec.entities.Contato;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -27,4 +28,19 @@ public class ContatoDTO {
     private Long usuario_id;
     private LocalDateTime dhCad;
     private LocalDateTime dhAlt;
+    
+    public ContatoDTO(){}
+    // Construtor que converte de Contato para ContatoDTO
+    public ContatoDTO(Contato contato) {
+        this.id = contato.getId();
+        this.nome = contato.getNome();
+        this.email = contato.getEmail();
+        this.celular = contato.getCelular();
+        this.telefone = contato.getTelefone();
+        this.snFavorito = contato.getSnFavorito();
+        this.snAtivo = contato.getSnAtivo();
+        this.usuario_id = contato.getUsuario().getId();
+        this.dhCad = contato.getDhCad();
+        this.dhAlt = contato.getDhAlt();
+    }
 }
