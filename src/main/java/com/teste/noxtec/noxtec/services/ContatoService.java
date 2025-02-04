@@ -106,10 +106,11 @@ public class ContatoService {
     public Page<Contato> getContatosPaginadosEOrdenadosPorQuery(RequestPageDTO dto) {
         String sortBy = dto.getSortBy();
         String sortDir = dto.getSortDir();
-        int page = dto.getPage();
-        int size = dto.getSize();
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();;
-        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = PageRequest.of(dto.getPage(), dto.getSize(), sort);
+        if (dto.getFiltro() != null && !dto.getFiltro().equals("")) {
+            return repository.findPageByFiltro(dto.getFiltro(), pageable);
+        }
         return repository.findPage(pageable);
     }
 }

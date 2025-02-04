@@ -21,4 +21,6 @@ public class RequestPageDTO {
     private String sortBy;
     @NotNull
     private String sortDir;
+    
+    private String filtro;
 }

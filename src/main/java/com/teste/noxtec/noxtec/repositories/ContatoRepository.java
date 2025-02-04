@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -22,4 +23,11 @@ public interface ContatoRepository extends JpaRepository<Contato, Long> {
     List<Contato> findAllByOrderByDhCadDesc();
     @Query("SELECT c FROM Contato c")
     Page<Contato> findPage(Pageable pageable);
+    @Query("SELECT c FROM Contato c WHERE " +
+            "LOWER(c.nome) LIKE LOWER(CONCAT('%', :term, '%')) OR " +
+            "LOWER(c.email) LIKE LOWER(CONCAT('%', :term, '%')) OR " +
+            "c.celular LIKE %:term% OR " +
+            "c.telefone LIKE %:term%")
+    Page<Contato> findPageByFiltro(@Param("term") String term, Pageable pageable);
+
 }
