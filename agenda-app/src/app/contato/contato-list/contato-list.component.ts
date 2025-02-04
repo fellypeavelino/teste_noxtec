@@ -2,7 +2,7 @@ import { Component, ViewChild, ChangeDetectionStrategy, OnInit } from '@angular/
 import { MatSort } from '@angular/material/sort';
 import { ContatoService } from '../contato.service';
 import { Contato } from '../contato.model';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -11,6 +11,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from '@angular/material/button';
 import {Sort, MatSortModule} from '@angular/material/sort';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {FormsModule} from '@angular/forms';
+
 @Component({
   selector: 'app-contato-list',
   templateUrl: './contato-list.component.html',
@@ -18,7 +21,7 @@ import {Sort, MatSortModule} from '@angular/material/sort';
   imports: [
     MatTableModule, MatPaginatorModule, MatIconModule, 
     MatFormFieldModule, MatInputModule, ReactiveFormsModule,
-    MatButtonModule, MatSortModule
+    MatButtonModule, MatSortModule, MatSlideToggleModule, FormsModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -27,6 +30,7 @@ export class ContatoListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'email', 'celular', 'telefone', 'snFavorito', 'snAtivo', 'dhCad', 'acoes'];
   sortedData!: Contato[];
   listaContato!: Contato[];
+  listaPaginada: boolean = false;
   constructor(
     private contatoService: ContatoService,
     private router: Router

@@ -5,6 +5,7 @@
 package com.teste.noxtec.noxtec.services;
 
 import com.teste.noxtec.noxtec.dtos.ContatoDTO;
+import com.teste.noxtec.noxtec.dtos.ContatosPaginadosDTO;
 import com.teste.noxtec.noxtec.dtos.RequestPageDTO;
 import com.teste.noxtec.noxtec.entities.Contato;
 import com.teste.noxtec.noxtec.entities.Usuario;
@@ -103,14 +104,32 @@ public class ContatoService {
         return repository.findPage(pageable);
     }
     
-    public Page<Contato> getContatosPaginadosEOrdenadosPorQuery(RequestPageDTO dto) {
+    public ContatosPaginadosDTO getContatosPaginadosEOrdenadosPorQuery(RequestPageDTO dto) {
+        ContatosPaginadosDTO result = new ContatosPaginadosDTO();
+        List<ContatoDTO> contatosDto = new ArrayList<>();
+        result.setParam(dto);
+
         String sortBy = dto.getSortBy();
         String sortDir = dto.getSortDir();
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();;
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(dto.getPage(), dto.getSize(), sort);
-        if (dto.getFiltro() != null && !dto.getFiltro().equals("")) {
-            return repository.findPageByFiltro(dto.getFiltro(), pageable);
+
+        Page<Contato> page = null;
+        if (dto.getFiltro() != null && !dto.getFiltro().isEmpty()) {
+            page = repository.findPageByFiltro(dto.getFiltro(), pageable);
+        } else {
+            page = repository.findPage(pageable);
         }
-        return repository.findPage(pageable);
+
+        contatosDto = this.convertToListDto(page.getContent());
+        result.setContatosDto(contatosDto);
+        result.setTotal(repository.count());
+        return result;
+    }
+
+    private List<ContatoDTO> convertToListDto(List<Contato> contatos) {
+        List<ContatoDTO> listResult = new ArrayList<>();
+        contatos.forEach(c -> listResult.add(new ContatoDTO(c)));
+        return listResult;
     }
 }

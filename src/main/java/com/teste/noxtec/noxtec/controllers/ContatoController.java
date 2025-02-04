@@ -5,6 +5,7 @@
 package com.teste.noxtec.noxtec.controllers;
 
 import com.teste.noxtec.noxtec.dtos.ContatoDTO;
+import com.teste.noxtec.noxtec.dtos.ContatosPaginadosDTO;
 import com.teste.noxtec.noxtec.dtos.RequestPageDTO;
 import com.teste.noxtec.noxtec.entities.Contato;
 import com.teste.noxtec.noxtec.services.ContatoService;
@@ -100,7 +101,7 @@ public class ContatoController {
     }
     
     @PostMapping("/paginacao")
-    public Page<Contato> getContatosPaginadosEOrdenadosPorQuery(@Valid @RequestBody RequestPageDTO dto) {
+    public ContatosPaginadosDTO getContatosPaginadosEOrdenadosPorQuery(@Valid @RequestBody RequestPageDTO dto) {
         return service.getContatosPaginadosEOrdenadosPorQuery(dto);
     }
 }
