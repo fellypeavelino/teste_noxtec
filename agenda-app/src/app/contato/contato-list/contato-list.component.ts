@@ -100,6 +100,8 @@ export class ContatoListComponent implements OnInit {
           return vm.compare(a.email, b.email, isAsc);
         case 'celular':
           return vm.compare(a.celular, b.celular, isAsc);
+        case 'telefone':
+          return vm.compare(a.telefone, b.telefone, isAsc);
         case 'snFavorito':
           return vm.compare(a.snFavorito, b.snFavorito, isAsc);
         case 'snAtivo':
