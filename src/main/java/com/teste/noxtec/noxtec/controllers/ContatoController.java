@@ -5,6 +5,7 @@
 package com.teste.noxtec.noxtec.controllers;
 
 import com.teste.noxtec.noxtec.dtos.ContatoDTO;
+import com.teste.noxtec.noxtec.dtos.RequestPageDTO;
 import com.teste.noxtec.noxtec.entities.Contato;
 import com.teste.noxtec.noxtec.services.ContatoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -87,5 +88,19 @@ public class ContatoController {
             return new ResponseEntity<>(contatoDto, HttpStatus.BAD_GATEWAY);
         }
         return ResponseEntity.ok(contatoDto);
+    }
+    
+    @GetMapping("paginacao")
+    public Page<Contato> getContatosPaginadosEOrdenados(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "dhCad") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDir) {
+        return service.getContatosPaginadosEOrdenados(page, size, sortBy, sortDir);
+    }
+    
+    @PostMapping("/paginacao")
+    public Page<Contato> getContatosPaginadosEOrdenadosPorQuery(@Valid @RequestBody RequestPageDTO dto) {
+        return service.getContatosPaginadosEOrdenadosPorQuery(dto);
     }
 }

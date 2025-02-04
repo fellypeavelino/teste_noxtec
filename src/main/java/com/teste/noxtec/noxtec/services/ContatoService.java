@@ -5,6 +5,7 @@
 package com.teste.noxtec.noxtec.services;
 
 import com.teste.noxtec.noxtec.dtos.ContatoDTO;
+import com.teste.noxtec.noxtec.dtos.RequestPageDTO;
 import com.teste.noxtec.noxtec.entities.Contato;
 import com.teste.noxtec.noxtec.entities.Usuario;
 import com.teste.noxtec.noxtec.repositories.ContatoRepository;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class ContatoService {
@@ -92,5 +95,21 @@ public class ContatoService {
     private Contato convertToEntity(ContatoDTO contatoDto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(contatoDto, Contato.class);
+    }
+    
+    public Page<Contato> getContatosPaginadosEOrdenados(int page, int size, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();;
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return repository.findPage(pageable);
+    }
+    
+    public Page<Contato> getContatosPaginadosEOrdenadosPorQuery(RequestPageDTO dto) {
+        String sortBy = dto.getSortBy();
+        String sortDir = dto.getSortDir();
+        int page = dto.getPage();
+        int size = dto.getSize();
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();;
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return repository.findPage(pageable);
     }
 }
