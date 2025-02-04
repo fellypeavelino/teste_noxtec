@@ -1,6 +1,9 @@
 .align-right {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    margin-right: 16px;
+    margin-top: 6px;
 }
 
 .button-logout {

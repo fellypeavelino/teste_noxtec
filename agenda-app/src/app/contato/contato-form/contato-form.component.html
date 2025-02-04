@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="login-card">
   <mat-card-title>{{ isEdit ? 'Editar Contato' : 'Novo Contato' }}</mat-card-title>
   <mat-card-content>
     <form [formGroup]="contatoForm" (ngSubmit)="salvar()" class="vertical-form">

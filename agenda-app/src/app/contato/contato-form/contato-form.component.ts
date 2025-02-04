@@ -32,13 +32,13 @@ export class ContatoFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.contatoForm = this.fb.group({
-      nome: ['', Validators.required],
+      nome: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
-      celular: ['', Validators.required],
-      telefone: [''],
+      celular: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
+      telefone: ['', [Validators.maxLength(15)]],
       snFavorito: ['', Validators.required],
       snAtivo: ['', Validators.required]
-    });
+  });
     this.carregarDados();
   }
 
