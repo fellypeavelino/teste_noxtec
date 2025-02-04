@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
-import { ContatoService } from '../contato/contato.service';
+import { ContatoService } from '../../contato/services/contato.service';
 import { LoguinService } from './loguin.service';
 import { Router } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
-import { GuardService } from '../guard.service';
+import { GuardService } from '../../services/guard.service';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 

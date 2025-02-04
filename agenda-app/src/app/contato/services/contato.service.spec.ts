@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ContatoService } from './contato.service';
-import { Contato } from './contato.model';
+import { ContatoService } from '../services/contato.service';
+import { Contato } from '../models/contato.model';
 import { provideHttpClient } from '@angular/common/http';
 
 describe('ContatoService', () => {

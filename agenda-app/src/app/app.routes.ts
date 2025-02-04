@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { ContatoListComponent } from './contato/contato-list/contato-list.component';
-import { ContatoFormComponent } from './contato/contato-form/contato-form.component';
-import { ErrorComponent } from './error/error.component';
-import { authGuard } from './auth.guard'
-import { LoguinComponent } from './loguin/loguin.component'
+import { ContatoListComponent } from './contato/components/contato-list/contato-list.component';
+import { ContatoFormComponent } from './contato/components/contato-form/contato-form.component';
+import { ErrorComponent } from './components/error/error.component';
+import { authGuard } from './guards/auth.guard'
+import { LoguinComponent } from './components/loguin/loguin.component'
 
 export const routes: Routes = [
   { path: 'loguin', component: LoguinComponent },

@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { GuardService } from './guard.service';
+import { GuardService } from '../services/guard.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(GuardService);

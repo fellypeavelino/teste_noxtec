@@ -1,7 +1,7 @@
 import { Component, ViewChild, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
-import { ContatoService } from '../contato.service';
-import { Contato } from '../contato.model';
+import { ContatoService } from '../../services/contato.service';
+import { Contato } from '../../models/contato.model';
 import {MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
@@ -121,5 +121,9 @@ export class ContatoListComponent implements OnInit {
 
   compare(a: any, b: any, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  ativarDestaivarListaPaginada(){
+    console.log(this.listaPaginada);
   }
 }

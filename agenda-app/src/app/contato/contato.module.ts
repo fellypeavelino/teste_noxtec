@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 
-import { ContatoListComponent } from './contato-list/contato-list.component';
-import { ContatoFormComponent } from './contato-form/contato-form.component';
+import { ContatoListComponent } from './components/contato-list/contato-list.component';
+import { ContatoFormComponent } from './components/contato-form/contato-form.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

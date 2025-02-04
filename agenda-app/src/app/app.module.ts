@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { LoguinComponent } from './loguin/loguin.component';
+import { LoguinComponent } from './components/loguin/loguin.component';
 import { ContatoModule } from './contato/contato.module';
 import { routes } from './app.routes';
 

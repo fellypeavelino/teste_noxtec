@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Contato } from './contato.model';
+import { Contato } from '../models/contato.model';
 import { firstValueFrom, Observable  } from 'rxjs';
 
 @Injectable({
@@ -27,6 +27,13 @@ export class ContatoService {
   }
 
   async getAll(): Promise<Contato[]> {
+    const headers = await this.getHeaders();
+    return await firstValueFrom (this.http.get<Contato[]>(this.apiUrl,{
+      headers
+    }));
+  }
+
+  async getPagination(): Promise<any> {
     const headers = await this.getHeaders();
     return await firstValueFrom (this.http.get<Contato[]>(this.apiUrl,{
       headers

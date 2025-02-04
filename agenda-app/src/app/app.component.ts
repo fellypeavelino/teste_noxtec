@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { LoguinComponent } from './loguin/loguin.component';
+import { LoguinComponent } from './components/loguin/loguin.component';
 
 @Component({
   selector: 'app-root',

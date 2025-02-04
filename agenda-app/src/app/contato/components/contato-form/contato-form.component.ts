@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ContatoService } from '../contato.service';
-import { Contato } from '../contato.model';
+import { ContatoService } from '../../services/contato.service';
+import { Contato } from '../../models/contato.model';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
