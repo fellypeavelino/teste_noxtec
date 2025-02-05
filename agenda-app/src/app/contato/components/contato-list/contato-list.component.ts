@@ -186,4 +186,8 @@ export class ContatoListComponent implements OnInit {
     this.paramPaginacao.filtro = filterValue.trim().toLowerCase();
     this.loadContatosPaginado();
   }
+
+  tabelaRenderizada($event:any){
+    console.log($event);
+  }
 }

@@ -11,7 +11,9 @@
       <input matInput (keyup)="applyFilterPaginado($event)" placeholder="Digite para filtrar" />
     </mat-form-field>
   </div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="sortDataPaginado($event)">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" 
+  (contentChanged)="tabelaRenderizada($event)"
+  matSort (matSortChange)="sortDataPaginado($event)">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
