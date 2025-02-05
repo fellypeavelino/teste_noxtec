@@ -29,5 +29,11 @@ public interface ContatoRepository extends JpaRepository<Contato, Long> {
             "c.celular LIKE %:term% OR " +
             "c.telefone LIKE %:term%")
     Page<Contato> findPageByFiltro(@Param("term") String term, Pageable pageable);
+    @Query("SELECT c FROM Contato c WHERE " +
+            "LOWER(c.nome) LIKE LOWER(CONCAT('%', :term, '%')) OR " +
+            "LOWER(c.email) LIKE LOWER(CONCAT('%', :term, '%')) OR " +
+            "c.celular LIKE %:term% OR " +
+            "c.telefone LIKE %:term%")
+    List<Contato> findFiltro(@Param("term") String term);
 
 }

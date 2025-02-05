@@ -44,9 +44,9 @@ export class ContatoListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadContatos();
-    // this.carregarParamPaginacao();
-    // this.loadContatosPaginado();
+    //this.loadContatos();
+    this.carregarParamPaginacao();
+    this.loadContatosPaginado();
   }
 
   loadContatos(): void {
@@ -139,27 +139,16 @@ export class ContatoListComponent implements OnInit {
   }
 
   carregarDataSourcePaginado(jsonPaginate:any){  
-    this.dataSource.data = jsonPaginate.data;
-    this.lengthPage = jsonPaginate.pagination.totalItems;
-    this.dataSource.paginator = this.paginator;
-    console.log(this.lengthPage, jsonPaginate);
+    this.dataSource.data = jsonPaginate.contatosDto;
+    this.lengthPage = jsonPaginate.total;
+    this.paginator.length = jsonPaginate.total;
+    this.paginator.pageIndex = jsonPaginate.param.page;
   }
 
   loadContatosPaginado(): void {
     const vm = this;
     vm.contatoService.getPagination(vm.paramPaginacao).then(contatos => {
-      const currentPage = (this.paramPaginacao.page + 1);
-      const totalItems = contatos.total; 
-      const pageSize = contatos.param.size;
-      const totalPages = Math.ceil(totalItems / pageSize);
-      const jsonPaginate = {
-        data: contatos.contatosDto,
-        pagination: {
-          totalItems,currentPage,
-          pageSize, totalPages
-        }
-      }
-      vm.carregarDataSourcePaginado(jsonPaginate);
+      vm.carregarDataSourcePaginado(contatos);
     });
   }
 

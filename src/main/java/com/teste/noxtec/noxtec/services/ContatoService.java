@@ -115,15 +115,18 @@ public class ContatoService {
         Pageable pageable = PageRequest.of(dto.getPage(), dto.getSize(), sort);
 
         Page<Contato> page = null;
+        long total = 0;
         if (dto.getFiltro() != null && !dto.getFiltro().isEmpty()) {
             page = repository.findPageByFiltro(dto.getFiltro(), pageable);
+            total = repository.findFiltro(dto.getFiltro()).size();
         } else {
             page = repository.findPage(pageable);
+            total = repository.count();
         }
 
         contatosDto = this.convertToListDto(page.getContent());
         result.setContatosDto(contatosDto);
-        result.setTotal(repository.count());
+        result.setTotal(total);
         return result;
     }
 
