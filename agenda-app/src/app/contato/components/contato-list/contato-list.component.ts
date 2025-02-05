@@ -2,17 +2,17 @@ import { Component, ViewChild, ChangeDetectionStrategy, OnInit } from '@angular/
 import { MatSort } from '@angular/material/sort';
 import { ContatoService } from '../../services/contato.service';
 import { Contato } from '../../models/contato.model';
-import {MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatIconModule} from '@angular/material/icon';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {ReactiveFormsModule} from "@angular/forms";
-import {MatButtonModule} from '@angular/material/button';
-import {Sort, MatSortModule} from '@angular/material/sort';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {FormsModule} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatButtonModule } from '@angular/material/button';
+import { Sort, MatSortModule } from '@angular/material/sort';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 import { ObjRequest } from '../../../models/objRequest.model';
 
 @Component({
@@ -27,13 +27,17 @@ import { ObjRequest } from '../../../models/objRequest.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContatoListComponent implements OnInit {
-  dataSource  = new MatTableDataSource<Contato>([]);
+  dataSource = new MatTableDataSource<any>([]);
   displayedColumns: string[] = ['id', 'nome', 'email', 'celular', 'telefone', 'snFavorito', 'snAtivo', 'dhCad', 'acoes'];
   sortedData!: Contato[];
   listaContato!: Contato[];
   listaPaginada: boolean = false;
-  paramPaginacao!:ObjRequest;
-  lengthPage: number = 3;
+  paramPaginacao!: ObjRequest;
+  lengthPage: number = 0;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   constructor(
     private contatoService: ContatoService,
     private router: Router
@@ -45,9 +49,6 @@ export class ContatoListComponent implements OnInit {
     // this.loadContatosPaginado();
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
   loadContatos(): void {
     this.contatoService.getAll().then(contatos => {
       this.listaContato = contatos;
@@ -57,7 +58,7 @@ export class ContatoListComponent implements OnInit {
   }
 
   carregarDataSource(contatos: Contato[]){
-    this.dataSource = new MatTableDataSource<Contato>(contatos);
+    this.dataSource.data = contatos;
     this.dataSource.paginator = this.paginator;
   }
 
@@ -137,15 +138,28 @@ export class ContatoListComponent implements OnInit {
     this.paramPaginacao.filtro = "";
   }
 
-  carregarDataSourcePaginado(contatos: Contato[], total:number){
-    this.dataSource = new MatTableDataSource<Contato>(contatos);
-    this.lengthPage = total;
+  carregarDataSourcePaginado(jsonPaginate:any){  
+    this.dataSource.data = jsonPaginate.data;
+    this.lengthPage = jsonPaginate.pagination.totalItems;
+    this.dataSource.paginator = this.paginator;
+    console.log(this.lengthPage, jsonPaginate);
   }
 
   loadContatosPaginado(): void {
     const vm = this;
     vm.contatoService.getPagination(vm.paramPaginacao).then(contatos => {
-      vm.carregarDataSourcePaginado(contatos.contatosDto, contatos.total);
+      const currentPage = (this.paramPaginacao.page + 1);
+      const totalItems = contatos.total; 
+      const pageSize = contatos.param.size;
+      const totalPages = Math.ceil(totalItems / pageSize);
+      const jsonPaginate = {
+        data: contatos.contatosDto,
+        pagination: {
+          totalItems,currentPage,
+          pageSize, totalPages
+        }
+      }
+      vm.carregarDataSourcePaginado(jsonPaginate);
     });
   }
 
@@ -168,7 +182,7 @@ export class ContatoListComponent implements OnInit {
     this.loadContatosPaginado();
   }
 
-  eventoPaginacao($event:any){
+  eventoPaginacao($event: PageEvent){
     if (!this.paramPaginacao) {
       return;
     }
