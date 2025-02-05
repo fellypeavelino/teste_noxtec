@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { LoguinComponent } from './components/loguin/loguin.component';
-
+import { LoadingServiceService } from './services/loading-service.service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, LoguinComponent],
@@ -9,12 +9,14 @@ import { LoguinComponent } from './components/loguin/loguin.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit  {
-  
   usarLogout!: boolean;
 
   constructor(
-    private router: Router
-  ) {}
+    private router: Router,
+    private loadingServiceService: LoadingServiceService
+  ) {
+    // this.loading$ = this.loadingServiceService.loading$;
+  }
 
   ngOnInit() {
     const vm = this;
