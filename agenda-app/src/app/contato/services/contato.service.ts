@@ -28,45 +28,27 @@ export class ContatoService {
   }
 
   async getAll(): Promise<Contato[]> {
-    const headers = await this.getHeaders();
-    return await firstValueFrom (this.http.get<Contato[]>(this.apiUrl,{
-      headers
-    }));
+    return await firstValueFrom (this.http.get<Contato[]>(this.apiUrl));
   }
 
   async getPagination(param:ObjRequest): Promise<any> {
-    const headers = await this.getHeaders();
-    return await firstValueFrom (this.http.post<any>(this.apiUrl+"/paginacao", param,{
-      headers
-    }));
+    return await firstValueFrom (this.http.post<any>(this.apiUrl+"/paginacao", param));
   }
 
   async getById(id: number): Promise<Contato> {
-    const headers = await this.getHeaders();
-    return await firstValueFrom (this.http.get<Contato>(`${this.apiUrl}/${id}`,{
-      headers
-    }));
+    return await firstValueFrom (this.http.get<Contato>(`${this.apiUrl}/${id}`));
   }
 
   async create(contato: Contato): Promise<Contato> {
-    const headers = await this.getHeaders();
-    return await firstValueFrom (this.http.post<Contato>(this.apiUrl, contato,{
-      headers
-    }));
+    return await firstValueFrom (this.http.post<Contato>(this.apiUrl, contato));
   }
 
   async update(id: number, contato: Contato): Promise<Contato> {
-    const headers = await this.getHeaders();
-    return await firstValueFrom (this.http.put<Contato>(`${this.apiUrl}/${id}`, contato,{
-      headers
-    }));
+    return await firstValueFrom (this.http.put<Contato>(`${this.apiUrl}/${id}`, contato));
   }
 
   async delete(id: number): Promise<void> {
-    const headers = await this.getHeaders();
-    return await firstValueFrom (this.http.delete<void>(`${this.apiUrl}/${id}`,{
-      headers
-    }));
+    return await firstValueFrom (this.http.delete<void>(`${this.apiUrl}/${id}`));
   }
 
   getUsuarioLoguin(): any | null {
